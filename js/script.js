@@ -29,6 +29,7 @@ var labels = [
 
 var flipped = [];
 var matched = [];
+var counter = 0;
 
 function assignCards() {
   var cardsToAssign = [
@@ -60,10 +61,17 @@ function assignCards() {
 
 function flipCard(event) {
   var card = event.target;
-  var features = card.children;
-  for (var i = 0; i < features.length; i++) {
-    features[i].classList.add('flipped');
+  if (card.id !== 'game-board') {
+    if (event.target.classList.value !== 'flipped') {
+      flipped.push(card);
+      var features = card.children;
+      for (var i = 0; i < features.length; i++) {
+        features[i].classList.add('flipped');
+      }
+      counter++;
+    }
   }
+  scoreBoard.children[1].innerHTML = 'Clicks: ' + counter;
 }
 
 function hideCards() {
@@ -73,18 +81,48 @@ function hideCards() {
   });
 }
 
+function hideAllCards() {
+  hideCards();
+  matched.forEach(function(item) {
+    item.children[0].classList.remove('flipped');
+    item.children[1].classList.remove('flipped');
+  });
+}
+
+function determineMatch(event) {
+  var card = event.target;
+  if (card.children[1].innerHTML === flipped[0].children[1].innerHTML) {
+    matched.push(flipped[0]);
+    matched.push(event.target);
+    flipped = [];
+  } else {
+    setTimeout(function() {
+      hideCards();
+      flipped = [];
+    }, 2000);
+  }
+}
+
 window.addEventListener('load', function() {
   assignCards();
+  var scoreBoard = document.getElementById('scoreBoard');
 
   var newGameButton = document.getElementById('newGame');
   newGameButton.addEventListener('click', function() {
     assignCards();
-    hideCards();
+    hideAllCards();
+    flipped = [];
+    matched = [];
+    counter = 0;
+    scoreBoard.children[1].innerHTML = 'Clicks: ';
   });
 
   var gameBoard = document.getElementById('game-board');
   gameBoard.addEventListener('click', function(event) {
+    //ADD: if event.target is a card and is not already flipped
     flipCard(event);
-    flipped.push(event.target);
+    if (flipped.length > 1) {
+      determineMatch(event);
+    }
   });
 });
