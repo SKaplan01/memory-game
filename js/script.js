@@ -61,7 +61,7 @@ function assignCards() {
 
 function flipCard(event) {
   var card = event.target;
-  if (card.id !== 'game-board') {
+  if (card.id !== 'container') {
     if (
       event.target.classList.value !== 'flipped' &&
       event.target.classList.value !== 'label flipped'
@@ -120,7 +120,7 @@ window.addEventListener('load', function() {
     scoreBoard.children[1].innerHTML = 'Clicks: ';
   });
 
-  var gameBoard = document.getElementById('game-board');
+  var gameBoard = document.getElementById('container');
   gameBoard.addEventListener('click', function(event) {
     //ADD: if event.target is a card and is not already flipped
     if (flipped.length < 2) {
