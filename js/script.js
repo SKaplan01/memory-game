@@ -62,7 +62,10 @@ function assignCards() {
 function flipCard(event) {
   var card = event.target;
   if (card.id !== 'game-board') {
-    if (event.target.classList.value !== 'flipped') {
+    if (
+      event.target.classList.value !== 'flipped' &&
+      event.target.classList.value !== 'label flipped'
+    ) {
       flipped.push(card);
       var features = card.children;
       for (var i = 0; i < features.length; i++) {
@@ -79,6 +82,7 @@ function hideCards() {
     item.children[0].classList.remove('flipped');
     item.children[1].classList.remove('flipped');
   });
+  flipped = [];
 }
 
 function hideAllCards() {
@@ -98,8 +102,7 @@ function determineMatch(event) {
   } else {
     setTimeout(function() {
       hideCards();
-      flipped = [];
-    }, 2000);
+    }, 1000);
   }
 }
 
@@ -120,9 +123,11 @@ window.addEventListener('load', function() {
   var gameBoard = document.getElementById('game-board');
   gameBoard.addEventListener('click', function(event) {
     //ADD: if event.target is a card and is not already flipped
-    flipCard(event);
-    if (flipped.length > 1) {
-      determineMatch(event);
+    if (flipped.length < 2) {
+      flipCard(event);
+      if (flipped.length === 2) {
+        determineMatch(event);
+      }
     }
   });
 });
