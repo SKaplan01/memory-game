@@ -106,7 +106,7 @@ function flipCard(event) {
         counter++;
       }
     }
-    scoreBoard.children[2].innerHTML = 'Clicks: ' + counter;
+    scoreBoard.children[1].children[1].children[1].innerText = counter;
   }
 }
 
@@ -152,12 +152,13 @@ function storeBestScore() {
 }
 
 function displayScore() {
-  var displayScore = document.getElementById('scoreBoard').children[1];
+  var displayScore = document.getElementById('scoreBoard').children[1]
+    .children[0].children[1];
   var bestScore = JSON.parse(localStorage.getItem('bestScore'));
   if (bestScore === null) {
-    displayScore.innerHTML = 'Best Score: ';
+    displayScore.innerText = '__';
   } else {
-    displayScore.innerHTML = 'Best Score: ' + bestScore;
+    displayScore.innerText = bestScore;
   }
 }
 
@@ -176,7 +177,7 @@ window.addEventListener('load', function() {
     flipped = [];
     matched = [];
     counter = 0;
-    scoreBoard.children[2].innerHTML = 'Clicks: ';
+    scoreBoard.children[1].children[1].children[1].innerText = '__';
     displayScore();
   });
 

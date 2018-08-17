@@ -28,17 +28,71 @@ h2 {
   margin-bottom: 1em;
 }
 
-#scoreBoard {
+#flex-top {
   display: flex;
   justify-content: space-around;
-  max-width: 550px;
+  max-width: 700px;
   text-align: center;
   margin: auto;
 }
 
+#scoreBoard {
+  background-color: rgb(18, 77, 40);
+  width: 200px;
+}
+
+#scoreBoard-header {
+  padding: 3%;
+  background-color: white;
+  display: flex;
+  width: 94%;
+  margin: 0;
+  align-items: center;
+  font-weight: 800;
+  font-size: 1.5em;
+  text-align: center;
+}
+
+#scoreBoard-main {
+  display: flex;
+}
+
+.score {
+  width: 50%;
+  padding-top: 0.7em;
+  padding-bottom: 0.7em;
+}
+
+.score div:first-child {
+  color: white;
+  text-transform: uppercase;
+  font-weight: bold;
+  height: 2.3em;
+}
+
+.score div:nth-child(2) {
+  width: 80%;
+  margin: auto;
+  text-align: center;
+  background-color: black;
+  color: rgb(170, 26, 26);
+  font-size: 2.1em;
+  font-family: sans-serif;
+}
+
+@media (max-width: 644px) {
+  #flex-top {
+    flex-direction: column;
+  }
+  #scoreBoard {
+    margin: auto;
+    height: 215px;
+  }
+}
+
 button {
   background-color: rgb(77, 113, 231);
-  border-radius: 10px;
+  border-radius: 5px;
   color: white;
 }
 
@@ -116,6 +170,12 @@ img {
   height: 90%;
   border-radius: 10%;
   padding: 5%;
+}
+
+#sweetums {
+  width: 70px;
+  height: 70px;
+  padding: 0;
 }
 
 .label {
