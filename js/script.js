@@ -84,9 +84,9 @@ function assignCards() {
     for (var j = 0; j < 2; j++) {
       var index = Math.floor(Math.random() * max);
       var card = document.getElementById(cardsToAssign[index]);
-      var image = card.children[0];
+      var image = card.children[1].children[0];
       image.setAttribute('src', currentCharacter.image);
-      var caption = card.children[1];
+      var caption = card.children[1].children[1];
       caption.innerHTML = currentCharacter.name;
       cardsToAssign.splice(index, 1);
       max = max - 1;
@@ -94,42 +94,26 @@ function assignCards() {
     nums.splice(idx, 1);
     characterMax = characterMax - 1;
   }
-
-  /*var max = 12;
-  for (var i = 0; i < 12; i++) {
-    var index = Math.floor(Math.random() * max);
-    var card = document.getElementById(cardsToAssign[index]);
-    var image = card.children[0];
-    image.setAttribute('src', characters[i].image);
-    var caption = card.children[1];
-    caption.innerHTML = characters[i].name;
-    cardsToAssign.splice(index, 1);
-    max = max - 1;
-  }*/
 }
 
 function flipCard(event) {
-  var card = event.target;
-  if (card.id !== 'container') {
-    if (
-      event.target.classList.value !== 'flipped' &&
-      event.target.classList.value !== 'label flipped'
-    ) {
-      flipped.push(card);
-      var features = card.children;
-      for (var i = 0; i < features.length; i++) {
-        features[i].classList.add('flipped');
+  if (event.target.parentElement.classList[0] !== 'card__face') {
+    var card = event.target.parentElement;
+    if (card.id !== 'container' && card.id !== 'game-board') {
+      if (card.classList.value !== 'flipped') {
+        card.classList.add('flipped');
+        flipped.push(card);
+        counter++;
       }
-      counter++;
     }
+    scoreBoard.children[2].innerHTML = 'Clicks: ' + counter;
   }
-  scoreBoard.children[1].innerHTML = 'Clicks: ' + counter;
 }
 
 function hideCards() {
   flipped.forEach(function(item) {
-    item.children[0].classList.remove('flipped');
-    item.children[1].classList.remove('flipped');
+    item.classList.remove('flipped');
+    item.classList.remove('flipped');
   });
   flipped = [];
 }
@@ -137,21 +121,23 @@ function hideCards() {
 function hideAllCards() {
   hideCards();
   matched.forEach(function(item) {
-    item.children[0].classList.remove('flipped');
-    item.children[1].classList.remove('flipped');
+    item.classList.remove('flipped');
+    item.classList.remove('flipped');
   });
 }
 
 function determineMatch(event) {
-  var card = event.target;
-  if (card.children[1].innerHTML === flipped[0].children[1].innerHTML) {
+  if (
+    event.target.nextElementSibling.children[1].innerHTML ===
+    flipped[0].children[1].children[1].innerHTML
+  ) {
     matched.push(flipped[0]);
-    matched.push(event.target);
+    matched.push(event.target.parentElement);
     flipped = [];
   } else {
     setTimeout(function() {
       hideCards();
-    }, 1000);
+    }, 1500);
   }
 }
 
@@ -166,7 +152,7 @@ function storeBestScore() {
 }
 
 function displayScore() {
-  var displayScore = document.getElementById('scoreBoard').children[0];
+  var displayScore = document.getElementById('scoreBoard').children[1];
   var bestScore = JSON.parse(localStorage.getItem('bestScore'));
   if (bestScore === null) {
     displayScore.innerHTML = 'Best Score: ';
@@ -183,12 +169,14 @@ window.addEventListener('load', function() {
 
   var newGameButton = document.getElementById('newGame');
   newGameButton.addEventListener('click', function() {
-    assignCards();
     hideAllCards();
+    setTimeout(function() {
+      assignCards();
+    }, 1000);
     flipped = [];
     matched = [];
     counter = 0;
-    scoreBoard.children[1].innerHTML = 'Clicks: ';
+    scoreBoard.children[2].innerHTML = 'Clicks: ';
     displayScore();
   });
 
