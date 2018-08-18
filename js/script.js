@@ -97,7 +97,10 @@ function assignCards() {
 }
 
 function flipCard(event) {
-  if (event.target.parentElement.classList[0] !== 'card__face') {
+  if (
+    event.target.parentElement.classList[0] !== 'card__face' &&
+    event.target.parentElement.classList[0] !== 'scene'
+  ) {
     var card = event.target.parentElement;
     if (card.id !== 'container' && card.id !== 'game-board') {
       if (card.classList.value !== 'flipped') {
@@ -121,8 +124,8 @@ function hideCards() {
 function hideAllCards() {
   hideCards();
   matched.forEach(function(item) {
-    item.classList.remove('flipped');
-    item.classList.remove('flipped');
+    item.classList.remove('flipped', 'matched');
+    item.classList.remove('flipped', 'matched');
   });
 }
 
@@ -133,7 +136,16 @@ function determineMatch(event) {
   ) {
     matched.push(flipped[0]);
     matched.push(event.target.parentElement);
-    flipped = [];
+    setTimeout(function() {
+      flipped[0].children[1].style.backgroundColor = 'rgb(250, 205, 5)';
+      event.target.parentElement.children[1].style.backgroundColor =
+        'rgb(250, 205, 5)';
+      flipped = [];
+    }, 800);
+    if (matched.length === 12) {
+      congrats = document.getElementById('congrats');
+      congrats.play();
+    }
   } else {
     setTimeout(function() {
       hideCards();
@@ -175,6 +187,9 @@ window.addEventListener('load', function() {
       assignCards();
     }, 1000);
     flipped = [];
+    matched.forEach(function(item) {
+      item.children[1].style.backgroundColor = 'rgb(21, 167, 16)';
+    });
     matched = [];
     counter = 0;
     scoreBoard.children[1].children[1].children[1].innerText = '__';

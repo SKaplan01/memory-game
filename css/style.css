@@ -122,6 +122,7 @@ h4 {
   max-width: 700px;
   justify-content: center;
   margin: 0 auto;
+  margin-bottom: 50px;
 }
 
 .scene {
@@ -193,3 +194,50 @@ img {
 .flipped {
   transform: rotateY(180deg);
 }
+
+/*
+I couldn't get any of the animations to run after you clicked "Start new game"
+They only ran once.
+
+.matched {
+  background-color: rgb(250, 205, 5);
+  transition: backgroundcolor 2s linear 1;
+}
+
+@keyframes backgroundchange {
+  0% {
+    background-color: rgb(21, 167, 16);
+  }
+  45% {
+    background-color: rgb(250, 205, 5);
+  }
+  50% {
+    background-color: rgb(255, 187, 1);
+  }
+  55% {
+    background-color: rgb(250, 205, 5);
+  }
+  100% {
+    background-color: rgb(21, 167, 16);
+  }
+}
+
+.matched {
+  border-style: double;
+  border-color: rgb(250, 205, 5);
+  border-width: 5px;
+  border-radius: 14px;
+  animation: borderchange 0.3s linear 1;
+}
+
+@keyframes borderchange {
+  0% {
+    border-width: 0.2px;
+    border-color: white;
+  }
+  100% {
+    border-width: 5px;
+    border-color: rgb(250, 205, 5);
+  }
+}
+*/
