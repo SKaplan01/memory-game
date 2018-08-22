@@ -197,7 +197,7 @@ img {
 
 .matched {
   background-color: rgb(250, 205, 5);
-  animation: backgroundchange 2.5s linear 1;
+  animation: backgroundchange 1.8s linear 1;
 }
 
 @keyframes backgroundchange {
