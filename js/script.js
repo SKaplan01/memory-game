@@ -137,9 +137,8 @@ function determineMatch(event) {
     matched.push(flipped[0]);
     matched.push(event.target.parentElement);
     setTimeout(function() {
-      flipped[0].children[1].style.backgroundColor = 'rgb(250, 205, 5)';
-      event.target.parentElement.children[1].style.backgroundColor =
-        'rgb(250, 205, 5)';
+      flipped[0].children[1].classList.add('matched');
+      event.target.parentElement.children[1].classList.add('matched');
       flipped = [];
     }, 800);
     if (matched.length === 12) {
@@ -188,7 +187,7 @@ window.addEventListener('load', function() {
     }, 1000);
     flipped = [];
     matched.forEach(function(item) {
-      item.children[1].style.backgroundColor = 'rgb(21, 167, 16)';
+      item.children[1].classList.remove('matched');
     });
     matched = [];
     counter = 0;
